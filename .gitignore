@@ -1,1 +1,10 @@
 */Hard/python-dir
+
+# Visual Studio specific folders
+.vs/
+Debug/
+
+# macOS debug symbol folders
+*.dSYM/
+# Ignore all files without extensions
+!*.cpp
