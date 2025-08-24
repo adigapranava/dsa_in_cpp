@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<unordered_map>
+#include <string>
 using namespace std;
 
 
@@ -26,12 +27,24 @@ public:
         }
         return temp;
     }
+
+    int maximum69Number2 (int num) {
+        string s = to_string(num);
+        for (char &c : s) {
+            if (c == '6') {
+                c = '9';
+                break; // only first 6 needs to be changed
+            }
+        }
+        return stoi(s);
+    }
+
 };
 
 int main() {
     Solution sol;
     int num = 9669; // Example input
-    int result = sol.maximum69Number(num);
+    int result = sol.maximum69Number2(num);
     
     cout << "Maximum 69 Number: " << result << endl; // Output the result
 
