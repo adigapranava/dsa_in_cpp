@@ -20,7 +20,7 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
+    ListNode *detectCycle2(ListNode *head) {
         unordered_map<ListNode *, int> visited;
         ListNode * temp = head;
         int i =0;
@@ -36,6 +36,28 @@ public:
             }
         }
         return nullptr;
+    }
+
+ ListNode *detectCycle(ListNode *head) {
+        if (!head || !head->next) return nullptr;
+
+        ListNode *slow = head, *fast = head;
+
+        // Phase 1: Detect if cycle exists
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast) { // cycle detected
+                // Phase 2: find entry point
+                slow = head;
+                while (slow != fast) {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return slow; // entry point of cycle
+            }
+        }
+        return nullptr; // no cycle
     }
 };
 
