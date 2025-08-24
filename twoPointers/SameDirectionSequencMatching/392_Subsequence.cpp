@@ -2,6 +2,17 @@
 #include<vector>
 #include<unordered_map>
 using namespace std;
+/*
+Example 1:
+
+Input: s = "abc", t = "ahbgdc"
+Output: true
+Example 2:
+
+Input: s = "axc", t = "ahbgdc"
+Output: false
+
+*/
 
 class Solution {
 public:
@@ -27,3 +38,11 @@ public:
         return isSubScequence;
     }
 };
+
+int main(){
+    Solution sol;
+    string s = "abc", t = "ahbgdc";
+    bool res = sol.isSubsequence(s, t);
+    cout << res << endl;
+    return 0;
+}
