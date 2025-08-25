@@ -19,12 +19,21 @@ public:
         return abs(a - round(a)) < eps;
     }
 
+    bool isPowerOfThree2(int n) {
+        if (n == 1) return true;
+        if (n <= 0 || n % 3 != 0) return false;
+        return isPowerOfThree(n / 3);
+    }
+
+    bool isPowerOfThree3(int n) {
+        return n > 0 && 1162261467 % n == 0;
+    }
 };
 
 int main() {
     Solution sol;
     int n = 243; // Example value for n
-    bool result = sol.isPowerOfThree(n);
+    bool result = sol.isPowerOfThree2(n);
 
     // Print the result
     cout << "Is " << n << " a power of three? " << (result ? "true" : "false") << endl;

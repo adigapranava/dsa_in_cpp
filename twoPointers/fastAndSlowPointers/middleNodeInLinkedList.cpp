@@ -31,6 +31,20 @@ public:
         }
         return t;
     }
+
+    ListNode* middleNode2(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        // move fast by 2 and slow by 1
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // when fast reaches end, slow is at middle
+        return slow;
+    }
 };
 
 int main() {
@@ -41,7 +55,7 @@ int main() {
     head->next->next->next = new ListNode(4);
     head->next->next->next->next = new ListNode(5);
 
-    ListNode* result = sol.middleNode(head);
+    ListNode* result = sol.middleNode2(head);
 
     // Print the middle node value
     cout << "Middle Node Value: " << result->val << endl;
