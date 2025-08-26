@@ -12,7 +12,7 @@ public:
         
     }
 
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+    bool searchMatrix2(vector<vector<int>>& matrix, int target) {
         int m = matrix.size();
         int n = matrix[0].size();
         int m_l = 0, m_r = m - 1, m_m;
@@ -43,13 +43,32 @@ public:
         }
         return false;
     }
+
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int L = 0, R = m * n - 1, M;
+        while (L <= R)
+        {
+            M = L + (R - L) / 2;
+            int i = M / n;
+            int j = M % n;
+            if (matrix[i][j] == target)
+                return true;
+            else if(matrix[i][j] < target)
+                L = M + 1;
+            else
+                R = M - 1;
+        }
+        return false;
+    }
 };
 
 
 int main(){
     Solution sol;
     vector<vector<int>> matrix = {{1,3,5,7},{10,11,16,20},{23,30,34,60}};
-    int target = 300;
+    int target = 1;
     cout<<sol.searchMatrix(matrix, target);
     return 0;
 }
