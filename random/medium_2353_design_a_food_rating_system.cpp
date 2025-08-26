@@ -1,48 +1,43 @@
 #include<iostream>
 #include<vector>
+#include<set>
 #include<unordered_map>
 using namespace std;
 
 class FoodRatings {
-    vector<string> foods;
-    vector<string> cuisines;
-    vector<int> ratings;
+    unordered_map<string, int> foodRating;
+    unordered_map<string, string> foodCuisines;
+    // <cuisine, {{-rating, food}}
+    unordered_map<string, set<pair<int, string>>> cuisineToSortedFoods;
+    unordered_map<string, pair<int, string>> foodToPair;
+
 public:
     FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
-        this->foods = foods;
-        this->cuisines = cuisines;
-        this->ratings = ratings;
+        for (int i = 0; i < foods.size(); i++)
+        {
+            this->foodRating[foods[i]] = ratings[i];
+            this->foodCuisines[foods[i]] = cuisines[i];
+            pair<int, string> p = {-ratings[i], foods[i]};
+            this->cuisineToSortedFoods[cuisines[i]].insert(p);
+            this->foodToPair[foods[i]] = p;
+        }
     }
     
     void changeRating(string food, int newRating) {
-        for (int i = 0; i < this->foods.size(); i++){
-            if (this->foods[i] == food){
-                this->ratings[i] = newRating;
-                break;
-            }
-        }
+        string cuisine = foodCuisines[food];
+
+        pair<int, string> oldFoodRatingPair = foodToPair[food];
+        cuisineToSortedFoods[cuisine].erase(oldFoodRatingPair);
+        
+        pair<int, string> newFoodRatingPair = {-newRating, food};
+        cuisineToSortedFoods[cuisine].insert(newFoodRatingPair);
+
+        foodToPair[food] = newFoodRatingPair;
+        foodRating[food] = newRating;
     }
     
     string highestRated(string cuisine) {
-        // int highestRatedPos = 0, highestRate = 0;
-        vector<string> cusine_foods;
-        int highestRate = 0;
-        string highest_rated_cusine_food;
-        for (int i = 0; i < this->foods.size(); i++)
-        {
-            if (this->cuisines[i] == cuisine)
-            {
-                if (this->ratings[i] > highestRate)
-                {
-                    highest_rated_cusine_food = this->foods[i];
-                    highestRate = this->ratings[i];
-                }else if(this->ratings[i] == highestRate)
-                {
-                    highest_rated_cusine_food = min(highest_rated_cusine_food, this->foods[i]);
-                }
-            }
-        }
-        return highest_rated_cusine_food;
+        return cuisineToSortedFoods[cuisine].begin()->second;
     }
 };
 /**
@@ -56,7 +51,11 @@ int main() {
     /*
         ["FoodRatings","highestRated","changeRating","highestRated","changeRating","highestRated","highestRated","changeRating","highestRated","changeRating","highestRated"]
         [
-            [["a","b","c","d","e","f"],["k","k","k","k","k","k"],[12,5,8,1,18,6]],
+            [
+                ["a","b","c","d","e","f"],
+                ["k","k","k","k","k","k"],
+                [12, 5,  8,  1,  18,  6]
+            ],
             ["k"],
             ["e",4],
             ["k"],
