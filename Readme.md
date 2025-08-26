@@ -1,1 +1,1 @@
-![LeetCode Stats](https://leetcard.jacoblin.cool/T56C6qHMWV?theme=dark&font=Roboto&ext=heatmap)
+![LeetCode Stats](https://leetcard.jacoblin.cool/adiga-pranava?theme=dark&font=Roboto&ext=heatmap)
